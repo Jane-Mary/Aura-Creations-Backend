@@ -20,13 +20,12 @@ export class Event {
 
     @Column()
     date: Date
-    
+
     @Column()
     size: number;
 
     @Column()
     location: string;
-
 
     @Column()
     status: string;
