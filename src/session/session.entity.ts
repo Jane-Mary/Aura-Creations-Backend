@@ -1,6 +1,7 @@
-import { Entity, PrimaryGeneratedColumn,Column,ManyToOne } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from "typeorm";
 import { User } from "src/User/user.entity";
 import { EventPlanner } from "src/event-planner/event-planner.entity";
+import { SessionStatus } from "src/enums/session-status.enum";
 
 @Entity()
 export class Session {
@@ -8,14 +9,16 @@ export class Session {
     id: number;
 
     @Column()
-    title: string;
+    scheduled_date: Date;
 
-    @Column()
-    description: string;
+    @Column({ type: 'enum', enum: SessionStatus, default: SessionStatus.SCHEDULED })
+    status: SessionStatus;
 
-    @Column()
-    image: string;
+    @ManyToOne(() => User, (user) => user.sessions)
+    @JoinColumn({ name: 'user_id' })
+    user: User;
 
-   
-
+    @ManyToOne(() => EventPlanner, (eventPlanner) => eventPlanner.session) // Updated this line
+    @JoinColumn({ name: 'event_planner_id' })
+    eventPlanner: EventPlanner;
 }
