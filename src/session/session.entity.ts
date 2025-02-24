@@ -18,7 +18,7 @@ export class Session {
     @JoinColumn({ name: 'user_id' })
     user: User;
 
-    @ManyToOne(() => EventPlanner, (eventPlanner) => eventPlanner.session) // Updated this line
+    @ManyToOne(() => EventPlanner, (eventPlanner) => eventPlanner.sessions) // Updated this line
     @JoinColumn({ name: 'event_planner_id' })
     eventPlanner: EventPlanner;
 }

@@ -1,36 +1,33 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm";
-import { Exclude } from 'class-transformer';
-import * as bcrypt from 'bcrypt';
-import { Session } from "src/session/session.entity";
-import { Event } from "src/event/event.entity";
-import { UserRole } from "src/enums/user-role.enum";
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
+import { Session } from 'src/session/session.entity';
+import { Event } from 'src/event/event.entity';
+import { UserRole } from 'src/enums/user-role.enum';
 @Entity()
 export class User {
-    @PrimaryGeneratedColumn()
-    id: number;
+  @PrimaryGeneratedColumn()
+  id: number;
 
-    @Column()
-    name: string;
+  @Column()
+  name: string;
 
-    @Column()
-    email: string;
+  @Column()
+  email: string;
 
-    @Column()
-    password: string;
-    
-    async hashPassword() {
-        this.password = await bcrypt.hash(this.password, 10); // Hash the password before saving
-    }
+  @Column()
+  password: string;
 
-    @Column({type: 'enum', enum: UserRole, default: UserRole.USER  })
-      role: UserRole;
+  @Column()
+  number: string;
 
-    @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
-    created_at: Date;  
+  @Column({ type: 'enum', enum: UserRole, default: UserRole.USER })
+  role: UserRole;
 
-    @OneToMany(() => Session, (session) => session.user) 
-    sessions: Session[];
+  @OneToMany(() => Session, (session) => session.user)
+  sessions: Session[];
 
-    @OneToMany(() => Event, (event) => event.eventPlanner) 
-    events: Event[];
+  @OneToMany(() => Event, (event) => event.user)
+  events: Event[];
+
+  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
+  created_at: Date;
 }

@@ -1,5 +1,5 @@
 import { Entity, PrimaryGeneratedColumn,Column,ManyToOne, JoinColumn } from "typeorm";
-import { EventPlanner } from "src/event-planner/event-planner.entity";
+import { EventPlanner } from "../event-planner/event-planner.entity";
 
 @Entity()
 export class Portfolio {
@@ -13,11 +13,10 @@ export class Portfolio {
     description: string;
 
     //array of strings
-    @Column()
+    @Column("text", { array: true })
     image: string;
 
     @ManyToOne(() => EventPlanner , (eventPlanner) => eventPlanner.portfolios)
-    @JoinColumn({ name: 'event_planner_id' })
     eventPlanner: EventPlanner
 
 }

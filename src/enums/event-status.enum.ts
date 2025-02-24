@@ -1,5 +1,5 @@
-export enum SessionStatus {
-    SCHEDULED = 'scheduled',
+export enum EventStatus {
+    PENDING = 'pending',
     COMPLETED = 'completed',
     CANCELLED = 'cancelled',
   }

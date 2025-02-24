@@ -1,17 +1,18 @@
-import { IsNotEmpty, IsString, IsNumber, IsDateString } from 'class-validator';
+import { IsNotEmpty, IsString, IsNumber, IsDateString, IsEnum } from 'class-validator';
+import { EventStatus } from 'src/enums/event-status.enum';
 
 export class CreateEventDto {
   @IsNotEmpty()
   @IsString()
-  name: string;
+  userName: string;
 
   @IsNotEmpty()
   @IsString()
-  email: string;
+  userEmail: string;
 
   @IsNotEmpty()
   @IsString()
-  number: number;
+  userNumber: string;
 
   @IsNotEmpty()
   @IsString()
@@ -30,12 +31,8 @@ export class CreateEventDto {
   location: string;
 
   @IsNotEmpty()
-  @IsString()
-  status: string;
-
-  @IsNotEmpty()
-  @IsNumber()
-  userId: number; // ID of the user creating the event
+  @IsEnum(EventStatus) // Validate against the enum
+  status: EventStatus;
 
   @IsNotEmpty()
   @IsNumber()

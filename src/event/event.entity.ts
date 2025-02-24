@@ -1,25 +1,17 @@
 import { Entity, PrimaryGeneratedColumn,Column,ManyToOne, JoinColumn } from "typeorm";
 import { User } from "src/User/user.entity";
 import { EventPlanner } from "src/event-planner/event-planner.entity";
+import { EventStatus } from "src/enums/event-status.enum";
 @Entity()
 export class Event {
     @PrimaryGeneratedColumn()
     id: number;
 
     @Column()
-    name: string;
-
-    @Column()
-    email: string;
-
-    @Column()
-    number: number;
-
-    @Column()
     theme: string;
 
     @Column()
-    date: Date
+    date: Date;
 
     @Column()
     size: string;
@@ -27,13 +19,12 @@ export class Event {
     @Column()
     location: string;
 
-    @Column()
-    status: string;
+    @Column({ type: 'enum', enum:EventStatus, default: EventStatus.PENDING })
+    status: EventStatus;
 
     @ManyToOne(() => User, (user) => user.events)
     @JoinColumn({ name: 'user_id' })
     user: User;
-
 
     @ManyToOne(() => EventPlanner, (planner) => planner.events)
     @JoinColumn({ name: 'event_planner_id' })

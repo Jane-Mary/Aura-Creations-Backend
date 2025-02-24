@@ -20,14 +20,22 @@ export class EventService {
 
   // Create a new event
   async create(createEventDto: CreateEventDto): Promise<Event> {
-    const { userId, eventPlannerId, ...eventData } = createEventDto;
+    const { userName, userEmail, userNumber, eventPlannerId, ...eventData } = createEventDto;
 
-    // Find the user and event planner
-    const user = await this.usersRepository.findOne({ where: { id: userId } });
+    // Check if the user already exists
+    let user = await this.usersRepository.findOne({ where: { email: userEmail } });
+
+    // If the user doesn't exist, create a new user
     if (!user) {
-      throw new NotFoundException(`User with ID ${userId} not found`);
+      user = this.usersRepository.create({
+        name: userName,
+        email: userEmail,
+        number: userNumber,
+      });
+      await this.usersRepository.save(user);
     }
 
+    // Find the selected event planner
     const eventPlanner = await this.eventPlannersRepository.findOne({
       where: { id: eventPlannerId },
     });
@@ -35,7 +43,7 @@ export class EventService {
       throw new NotFoundException(`Event Planner with ID ${eventPlannerId} not found`);
     }
 
-    // Create the event
+    // Create the event and associate it with the user and event planner
     const event = this.eventsRepository.create({
       ...eventData,
       user,
@@ -44,6 +52,7 @@ export class EventService {
 
     return this.eventsRepository.save(event);
   }
+
 
   // Get all events
   async findAll(): Promise<Event[]> {

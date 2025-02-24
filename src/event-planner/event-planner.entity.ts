@@ -1,6 +1,6 @@
 import { Entity, PrimaryGeneratedColumn,Column, OneToMany } from "typeorm";
 import { Event } from "src/event/event.entity";
-import { Portfolio } from "src/portfolio/portfolio.entity";
+import { Portfolio } from "../portfolio/portfolio.entity"
 import { Session } from "src/session/session.entity";
 
 @Entity()
@@ -14,21 +14,17 @@ export class EventPlanner {
     @Column()
     bio: string;
 
-    //array of strings
     @Column()
-    portfolio: string;
+    number: string;
 
-    @Column()
-    number: number;
-
-    @OneToMany(() => Portfolio, (portfolio) => portfolio.eventPlanner, { cascade: true })
+    @OneToMany(() => Portfolio, (portfolio) => portfolio.eventPlanner)
     portfolios: Portfolio[];
 
     @OneToMany(() => Event, (event) => event.eventPlanner)
     events: Event[];
 
     @OneToMany(() => Session , (session) => session.eventPlanner)
-    session : Session[];
+    sessions : Session[];
 
     @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
     created_at: Date;
