@@ -9,11 +9,11 @@ export class UserController {
 constructor (private readonly userService:UserService) {}
 
 //Create a new user
-@Post('create')
+@Post('create') 
 async create(@Body() createUserDto: CreateUserDto) : Promise<User> {
     return this.userService.create(createUserDto);
 }
-
+    
 //Get all users
 @Get()
 async findAll() : Promise<User[]> {

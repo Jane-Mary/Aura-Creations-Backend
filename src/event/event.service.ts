@@ -20,7 +20,7 @@ export class EventService {
 
   // Create a new event
   async create(createEventDto: CreateEventDto): Promise<Event> {
-    const { userName, userEmail, userNumber, eventPlannerId, ...eventData } = createEventDto;
+    const { userName, userEmail, userNumber,userPassword, eventPlannerId, ...eventData } = createEventDto;
 
     // Check if the user already exists
     let user = await this.usersRepository.findOne({ where: { email: userEmail } });
@@ -30,6 +30,7 @@ export class EventService {
       user = this.usersRepository.create({
         name: userName,
         email: userEmail,
+        password: userPassword,
         number: userNumber,
       });
       await this.usersRepository.save(user);

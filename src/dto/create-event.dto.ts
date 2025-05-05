@@ -16,6 +16,10 @@ export class CreateEventDto {
 
   @IsNotEmpty()
   @IsString()
+  userPassword: string;
+
+  @IsNotEmpty()
+  @IsString()
   theme: string;
 
   @IsNotEmpty()
