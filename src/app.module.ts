@@ -23,7 +23,7 @@ import { Session } from './session/session.entity';
       entities:[EventPlanner, Portfolio, Event,Session],
       autoLoadEntities: true, // Automatically load entities
       synchronize: true, // Only for development; disable in production
-    }),
+    }), 
     UserModule,
     SessionModule,
     PortfolioModule,
