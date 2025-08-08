@@ -12,6 +12,12 @@ export class EventPlanner {
     name: string;
 
     @Column()
+    email: string;
+
+    @Column()
+    password: string;
+
+    @Column()
     bio: string;
 
     @Column()

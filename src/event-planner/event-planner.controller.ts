@@ -1,6 +1,7 @@
 import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
 import { EventPlannerService } from './event-planner.service';
 import { EventPlanner } from './event-planner.entity';
+import { CreatePlannerDto } from 'src/dto/create-eventplanner.dto';
 
 @Controller('event-planners')
 export class EventPlannerController {
@@ -8,9 +9,16 @@ constructor(private readonly eventPlannerService: EventPlannerService) {}
 
 //Create a new planner
 @Post('create')
-async create(@Body() eventPlannerData: Partial<EventPlanner>): Promise<EventPlanner> {
-    return this.eventPlannerService.create(eventPlannerData)
+async create(@Body() createPlannerDto:CreatePlannerDto): Promise<EventPlanner> {
+    return this.eventPlannerService.create(createPlannerDto)
 }
+
+//User Login
+@Post('login')
+async login(@Body(){email,password}:{email:string; password:string}) {
+    return this.eventPlannerService.login(email,password);
+}
+   
 
 //Get all planners
 @Get()

@@ -13,7 +13,15 @@ constructor (private readonly userService:UserService) {}
 async create(@Body() createUserDto: CreateUserDto) : Promise<User> {
     return this.userService.create(createUserDto);
 }
+
+ // User Login
+  @Post('login')
+  async login(@Body() body: { email: string; password: string }): Promise<User> {
+    const { email, password } = body;
+    return this.userService.login(email, password);
+  }
     
+
 //Get all users
 @Get()
 async findAll() : Promise<User[]> {
